@@ -7,4 +7,4 @@ RUN apk add -U \
     ca-certificates \
     git \
     libtool \
-    pkg-config
+    pkgconf
