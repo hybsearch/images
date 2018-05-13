@@ -43,39 +43,39 @@ workflows:
       - base-stretch
       - base-alpine
 
-      - libs-stretch
+      - libs-stretch:
         requires: [ base-stretch ]
-      - libs-alpine
+      - libs-alpine:
         requires: [ base-alpine ]
 
-      - java-stretch
+      - java-stretch:
         requires: [ libs-stretch ]
-      - java-alpine
+      - java-alpine:
         requires: [ libs-alpine ]
 
-      - clustalo-stretch
+      - clustalo-stretch:
         requires: [ libs-stretch ]
-      - clustalo-alpine
+      - clustalo-alpine:
         requires: [ libs-alpine ]
 
-      - jml-stretch
+      - jml-stretch:
         requires: [ libs-stretch ]
-      - jml-alpine
+      - jml-alpine:
         requires: [ libs-alpine ]
 
-      - mr-bayes-stretch
+      - mr-bayes-stretch:
         requires: [ libs-stretch ]
-      - mr-bayes-alpine
+      - mr-bayes-alpine:
         requires: [ libs-alpine ]
 
-      - seq-gen-stretch
+      - seq-gen-stretch:
         requires: [ libs-stretch ]
-      - seq-gen-stretch
+      - seq-gen-stretch:
         requires: [ libs-alpine ]
 
-      - beast-stretch
+      - beast-stretch:
         requires: [ java-stretch ]
-      - beast-alpine
+      - beast-alpine:
         requires: [ java-alpine ]
 
   # cron_weekly:
