@@ -2,4 +2,13 @@ FROM docker.io/amd64/node:8-stretch AS hyb-node
 
 FROM hybsearch/base:stretch
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       libgomp1 \
+       libargtable2-dev \
+    && apt-get clean autoclean \
+    && rm -rfv /var/lib/apt/ \
+               /var/lib/cache/ \
+               /var/lib/log/
+
 COPY --from=hyb-node ["/usr/local/", "/usr/local/"]
