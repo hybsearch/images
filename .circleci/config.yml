@@ -25,11 +25,8 @@ x-defs:
       test -r /tmp/image.tar && docker load -qi /tmp/image.tar || echo "No cache found."
   - &docker-build-circle-job-image
     name: "Build the Docker Image"
-    command: >-
-      docker build --cache-from="$(docker images --quiet --all)"
-      -t "hybsearch/$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev):$CIRCLE_SHA1"
-      -f "./$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)/Dockerfile.$(echo $CIRCLE_JOB | rev | cut -d'-' -f1 | rev)"
-      "./$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)/"
+    command: script/ci_build_image
+
   - &print-build-info
     name: "Print build information"
     command: >-
