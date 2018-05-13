@@ -2,7 +2,7 @@ FROM hybsearch/libs:stretch AS build
 
 RUN apt-get update \
     && apt-get install -qy --no-install-recommends \
-       automake autoconf gcc g++ \
+       automake autoconf gcc g++ make \
        curl \
     && apt-get clean autoclean \
     && rm -rfv /var/lib/apt/ \
