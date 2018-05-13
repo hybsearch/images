@@ -1,6 +1,11 @@
-FROM hybsearch/java:alpine
+FROM hybsearch/base:alpine AS beast-install
 
 RUN apk add -U curl
 
-WORKDIR /beast
 RUN curl -fsSL "https://github.com/CompEvol/beast2/releases/download/v2.4.8/BEAST.v2.4.8.Linux.tgz" | gunzip - | tar -xv
+
+FROM hybsearch/java:alpine
+
+COPY --from=beast-install ["/beast/beast/bin/beast", "/usr/local/bin/"]
+COPY --from=beast-install ["/beast/beast/lib/beast.jar", "/usr/local/lib/"]
+COPY --from=beast-install ["/beast/beast/lib/launcher.jar", "/usr/local/lib/"]
