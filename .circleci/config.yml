@@ -16,11 +16,10 @@ x-defs:
       paths:
         - /tmp/*.tar
   - &docker-dump-image
-    name:
-      - name: 'Dump image'
-        command: |
-          ls -lah /tmp; docker save "$IMAGE_NAME:$CIRCLE_SHA1" > \
-            /tmp/$(echo $CIRCLE_JOB | cut -d'-' -f1).tar
+    name: 'Dump image'
+    command: >-
+      ls -lah /tmp; docker save "$IMAGE_NAME:$CIRCLE_SHA1" >
+      /tmp/$(echo $CIRCLE_JOB | cut -d'-' -f1).tar
 
 workflows:
   version: 2
