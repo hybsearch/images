@@ -1,0 +1,41 @@
+---
+version: 2
+
+x-defs:
+  - &caches
+    - &cache-load-docker
+      keys:
+        - docker--{{ }}
+
+workflows:
+  version: 2
+  on_commit:
+    jobs: &jobs
+      - base-stretch
+      - base-alpine
+      - libs
+      - java
+      - clustalo
+      - jml
+      - mr-bayes
+      - seq-gen
+      - beast
+
+  cron_weekly:
+    jobs: *jobs
+    triggers:
+      - schedule:
+          # only run Monday morning at 12:00am
+          cron: 0 */6 * * *
+          filters:
+            branches:
+              only: [master]
+
+jobs:
+  base:
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker build --cache-from="$(docker images --quiet --all)" -t "hybsearch/base:$CIRCLE_SHA1" -f ./base/Dockerfile.stretch
+      - run: *cmd-docker-save
+      - save_cache: *cache-save-docker
