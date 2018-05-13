@@ -22,7 +22,7 @@ x-defs:
   - &docker-load-image
     name: 'Load cached image'
     command: >-
-      docker load -qi /tmp/image.tar
+      test -r /tmp/image.tar && docker load -qi /tmp/image.tar || echo "No cache found."
   - &docker-build-circle-job-image
     name: "Build the Docker Image"
     command: >-
