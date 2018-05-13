@@ -6,6 +6,6 @@ RUN curl -fsSL "https://github.com/CompEvol/beast2/releases/download/v2.4.8/BEAS
 
 FROM hybsearch/java:alpine
 
-COPY --from=beast-install ["/beast/beast/bin/beast", "/usr/local/bin/"]
-COPY --from=beast-install ["/beast/beast/lib/beast.jar", "/usr/local/lib/"]
-COPY --from=beast-install ["/beast/beast/lib/launcher.jar", "/usr/local/lib/"]
+COPY --from=beast-install ["/beast/bin/beast", "/usr/local/bin/"]
+COPY --from=beast-install ["/beast/lib/beast.jar", "/usr/local/lib/"]
+COPY --from=beast-install ["/beast/lib/launcher.jar", "/usr/local/lib/"]
