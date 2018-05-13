@@ -25,7 +25,7 @@ x-defs:
       test -r /tmp/image.tar && docker load -qi /tmp/image.tar || echo "No cache found."
   - &docker-build-circle-job-image
     name: "Build the Docker Image"
-    command: script/ci_build_image
+    command: ./script/ci_build_image
 
   - &print-build-info
     name: "Print build information"
@@ -75,7 +75,6 @@ jobs:
   base-stretch: &auto_build
     <<: *defaults
     steps: &standard_build_steps
-      - run: *print-build-info
       - setup_remote_docker
       - checkout
       - restore_cache: *cache-load-docker
