@@ -26,7 +26,9 @@ x-defs:
   - &docker-build
     name: "Build the Docker Image"
     command: script/ci_build_image
-
+  - &docker-deploy
+    name: "Deploy to Docker Hub"
+    command: script/ci_deploy_image
   - &print-build-info
     name: "Print build information"
     command: >-
