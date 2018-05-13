@@ -114,6 +114,7 @@ jobs:
       - restore_cache: *cache-load-docker
       - run: *docker-load-image
       - run: *docker-build
+      - run: *docker-deploy
       - run: *docker-dump-image
       - save_cache: *cache-save-docker
 
