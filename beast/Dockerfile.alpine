@@ -1,1 +1,6 @@
 FROM hybsearch/java:alpine
+
+RUN apk add -U curl
+
+WORKDIR /beast
+RUN curl -fsSL "https://github.com/CompEvol/beast2/releases/download/v2.4.8/BEAST.v2.4.8.Linux.tgz" | gunzip - | tar -xv
