@@ -1,0 +1,31 @@
+#!/bin/sh
+
+inferred_image="$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)"
+inferred_variant="$(echo $CIRCLE_JOB | rev | cut -d'-' -f1 | rev)"
+
+image_id="$(docker images -q "hybsearch/$inferred_image:$CIRCLE_SHA1")"
+echo "image_id: $image_id"
+
+if [ -z "$image_id" ];
+then
+	echo "Could not find Docker image for this build; failing."
+	exit 1
+fi
+
+if [[ "$CIRCLE_BRANCH" = "master" ]]; then
+	echo "On master."
+else
+	echo "Not on master; not deploying."
+	exit 0
+fi
+
+docker tag "$image_id" "hybsearch/$inferred_image:$inferred_variant"
+images_to_push="hybsearch/$inferred_image:$inferred_variant"
+
+if [[ "$inferred_variant" = "stretch" ]];
+then
+	docker tag "$image_id" "hybsearch/$inferred_image:latest"
+	images_to_push="$images_to_push hybsearch/$inferred_image:$inferred_variant"
+fi
+
+docker push "$images_to_push"
