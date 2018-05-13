@@ -23,7 +23,7 @@ x-defs:
     name: 'Load cached image'
     command: >-
       test -r /tmp/image.tar && docker load -qi /tmp/image.tar || echo "No cache found."
-  - &docker-build-circle-job-image
+  - &docker-build
     name: "Build the Docker Image"
     command: script/ci_build_image
 
@@ -110,7 +110,7 @@ jobs:
       - checkout
       - restore_cache: *cache-load-docker
       - run: *docker-load-image
-      - run: *docker-build-circle-job-image
+      - run: *docker-build
       - run: *docker-dump-image
       - save_cache: *cache-save-docker
 
