@@ -19,6 +19,13 @@ x-defs:
     name: 'Dump image'
     command: >-
       docker save "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1" > /tmp/image.tar
+  - &docker-build-circle-job-image
+    name: "Build the Docker Image"
+    command: >-
+      docker build --cache-from="$(docker images --quiet --all)"
+      -t "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1"
+      -f "./$(echo $CIRCLE_JOB | cut -d'-' -f1)/Dockerfile.$(echo $CIRCLE_JOB | cut -d'-' -f2)"
+      "./$(echo $CIRCLE_JOB | cut -d'-' -f2)/"
 
 workflows:
   version: 2
@@ -51,11 +58,6 @@ jobs:
       - setup_remote_docker
       - checkout
       - restore_cache: *cache-load-docker
-      - run:
-          name: "Build the Docker Image"
-          command: >-
-            docker build --cache-from="$(docker images --quiet --all)"
-            -t "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1"
-            -f ./base/Dockerfile.$(echo $CIRCLE_JOB | cut -d'-' -f2) ./base/
+      - run: *docker-build-circle-job-image
       - run: *docker-dump-image
       - save_cache: *cache-save-docker
