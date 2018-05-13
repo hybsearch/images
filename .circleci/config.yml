@@ -28,7 +28,7 @@ x-defs:
     command: >-
       docker build --cache-from="$(docker images --quiet --all)"
       -t "hybsearch/$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev):$CIRCLE_SHA1"
-      -f "./$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)/Dockerfile.$(echo $CIRCLE_JOB | rev | cut -d'-' -f2 | rev)"
+      -f "./$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)/Dockerfile.$(echo $CIRCLE_JOB | rev | cut -d'-' -f1 | rev)"
       "./$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)/"
   - &print-build-info
     name: "Print build information"
