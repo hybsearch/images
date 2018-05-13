@@ -65,12 +65,11 @@ workflows:
       - beast-alpine: { requires: [ java-alpine ] }
 
   cron:
-    jobs:
-      <<: *jobs
+    jobs: *jobs
     triggers:
       - schedule:
           # Run quadridiurnally (4x per day, every 6th hour UTC)
-          cron: "0 */6 * * *"
+          cron: "0 0,6,12,18 * * *"
           filters:
             branches:
               only: [master]
