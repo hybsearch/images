@@ -6,12 +6,12 @@ if [ -z "$CIRCLE_JOB" ];
 then
 	echo "CIRCLE_JOB not found; not running in CI?"
 	exit 1
-else
-	inferred_image="$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)"
-	inferred_variant="$(echo $CIRCLE_JOB | rev | cut -d'-' -f1 | rev)"
-
-	docker build --cache-from="$(docker images --quiet --all)" \
-				 -t "hybsearch/$inferred_image:$CIRCLE_SHA1" \
-				 -f "$root/$inferred_image/Dockerfile.$inferred_variant" \
-				 "$root/$inferred_image/"
 fi
+
+inferred_image="$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)"
+inferred_variant="$(echo $CIRCLE_JOB | rev | cut -d'-' -f1 | rev)"
+
+docker build --cache-from="$(docker images --quiet --all)" \
+			 -t "hybsearch/$inferred_image:$CIRCLE_SHA1" \
+			 -f "$root/$inferred_image/Dockerfile.$inferred_variant" \
+			 "$root/$inferred_image/"
