@@ -36,7 +36,6 @@ x-defs:
       echo "Image: $(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)";
       echo "Variant: $(echo $CIRCLE_JOB | rev | cut -d'-' -f1 | rev)"
 
-
 workflows:
   version: 2
   on_commit:
