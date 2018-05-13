@@ -37,30 +37,60 @@ workflows:
   version: 2
   main:
     jobs: &jobs
-      - base-stretch
-      - base-alpine
+      - base-stretch:
+          context: docker-hub
+      - base-alpine:
+          context: docker-hub
 
-      - libs-stretch: { requires: [ base-stretch ] }
-      - libs-alpine: { requires: [ base-alpine ] }
+      - libs-stretch:
+          context: docker-hub
+          requires: [ base-stretch ]
+      - libs-alpine:
+          context: docker-hub
+          requires: [ base-alpine ]
 
-      - java-stretch: { requires: [ libs-stretch ] }
-      - java-alpine: { requires: [ libs-alpine ] }
+      - java-stretch:
+          context: docker-hub
+          requires: [ libs-stretch ]
+      - java-alpine:
+          context: docker-hub
+          requires: [ libs-alpine ]
 
-      - clustalo-stretch: { requires: [ libs-stretch ] }
-      - clustalo-alpine: { requires: [ libs-alpine ] }
+      - clustalo-stretch:
+          context: docker-hub
+          requires: [ libs-stretch ]
+      - clustalo-alpine:
+          context: docker-hub
+          requires: [ libs-alpine ]
 
       # External repository for these exists, but we build it here.
-      - jml-stretch: { requires: [ libs-stretch ] }
-      - jml-alpine: { requires: [ libs-alpine ] }
+      - jml-stretch:
+          context: docker-hub
+          requires: [ libs-stretch ]
+      - jml-alpine:
+          context: docker-hub
+          requires: [ libs-alpine ]
 
-      - mr-bayes-stretch: { requires: [ libs-stretch ] }
-      - mr-bayes-alpine: { requires: [ libs-alpine ] }
+      - mr-bayes-stretch:
+          context: docker-hub
+          requires: [ libs-stretch ]
+      - mr-bayes-alpine:
+          context: docker-hub
+          requires: [ libs-alpine ]
 
-      - seq-gen-stretch: { requires: [ libs-stretch ] }
-      - seq-gen-stretch: { requires: [ libs-alpine ] }
+      - seq-gen-stretch:
+          context: docker-hub
+          requires: [ libs-stretch ]
+      - seq-gen-stretch:
+          context: docker-hub
+          requires: [ libs-alpine ]
 
-      - beast-stretch: { requires: [ java-stretch ] }
-      - beast-alpine: { requires: [ java-alpine ] }
+      - beast-stretch:
+          context: docker-hub
+          requires: [ java-stretch ]
+      - beast-alpine:
+          context: docker-hub
+          requires: [ java-alpine ]
 
   cron:
     jobs: *jobs
