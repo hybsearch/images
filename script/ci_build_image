@@ -11,7 +11,7 @@ else
 	inferred_variant="$(echo $CIRCLE_JOB | rev | cut -d'-' -f1 | rev)"
 
 	docker build --cache-from="$(docker images --quiet --all)" \
-				 -t "hybsearch/$image:$CIRCLE_SHA1" \
-				 -f "$root/$image/Dockerfile.$inferred_variant" \
+				 -t "hybsearch/$inferred_image:$CIRCLE_SHA1" \
+				 -f "$root/$inferred_image/Dockerfile.$inferred_variant" \
 				 "$root/$inferred_image/"
 fi
