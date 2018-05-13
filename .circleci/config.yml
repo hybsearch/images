@@ -69,7 +69,6 @@ workflows:
           context: docker-hub
           requires: [ libs-alpine ]
 
-      # External repository for these exists, but we build it here.
       - jml-stretch:
           context: docker-hub
           requires: [ libs-stretch ]
@@ -87,7 +86,7 @@ workflows:
       - seq-gen-stretch:
           context: docker-hub
           requires: [ libs-stretch ]
-      - seq-gen-stretch:
+      - seq-gen-alpine:
           context: docker-hub
           requires: [ libs-alpine ]
 
