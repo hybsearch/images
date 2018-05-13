@@ -18,7 +18,7 @@ x-defs:
   - &docker-dump-image
     name: 'Dump image'
     command: >-
-      docker save "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1" > /tmp/image.tar
+      docker save "hybsearch/$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev):$CIRCLE_SHA1" > /tmp/image.tar
   - &docker-load-image
     name: 'Load cached image'
     command: >-
@@ -27,9 +27,15 @@ x-defs:
     name: "Build the Docker Image"
     command: >-
       docker build --cache-from="$(docker images --quiet --all)"
-      -t "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1"
-      -f "./$(echo $CIRCLE_JOB | cut -d'-' -f1)/Dockerfile.$(echo $CIRCLE_JOB | rev | cut -d'-' -f2 | rev)"
-      "./$(echo $CIRCLE_JOB | cut -d'-' -f1)/"
+      -t "hybsearch/$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev):$CIRCLE_SHA1"
+      -f "./$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)/Dockerfile.$(echo $CIRCLE_JOB | rev | cut -d'-' -f2 | rev)"
+      "./$(echo $CIRCLE_JOB | rev | cut -d'-' -f2-) | rev/"
+  - &print-build-info
+    name: "Print build information"
+    command: >-
+      echo "Image: $(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)";
+      echo "Variant: $(echo $CIRCLE_JOB | rev | cut -d'-' -f1 | rev)"
+
 
 workflows:
   version: 2
@@ -37,13 +43,20 @@ workflows:
     jobs: &jobs
       - base-stretch
       - base-alpine
+      # - libs-stretch
       # - libs
+      # - java-stretch
       # - java
+      # - clustalo-stretch
       # - clustalo
+      # - jml-stretch
       # - jml
+      # - mr-bayes-stretch
       # - mr-bayes
-      # - seq-gen
-      # - beast
+      # - seqgen-stretch
+      # - seqgen-stretch
+      # - beast-stretch
+      # - beast-alpine
 
   # cron_weekly:
   #   jobs: *jobs
@@ -59,6 +72,7 @@ jobs:
   base-stretch:
     <<: *defaults
     steps: &standard_build_steps
+      - run: *print-build-info
       - setup_remote_docker
       - checkout
       - restore_cache: *cache-load-docker
