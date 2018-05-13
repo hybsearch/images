@@ -4,7 +4,7 @@ inferred_image="$(echo $CIRCLE_JOB | rev | cut -d'-' -f2- | rev)"
 inferred_variant="$(echo $CIRCLE_JOB | rev | cut -d'-' -f1 | rev)"
 
 image_id="$(docker images -q "hybsearch/$inferred_image:$CIRCLE_SHA1")"
-echo "image_id: $image_id"
+echo "image_id: $image_id; hybsearch/$inferred_image:$inferred_variant"
 
 if [ -z "$image_id" ];
 then
