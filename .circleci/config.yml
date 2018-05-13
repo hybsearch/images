@@ -52,10 +52,11 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - name: "Build the Docker Image"
-        command: >-
-          docker build --cache-from="$(docker images --quiet --all)"
-                       -t "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1"
-                       -f ./base/Dockerfile.$(echo $CIRCLE_JOB | cut -d'-' -f2)
+      - run:
+          name: "Build the Docker Image"
+          command: >-
+            docker build --cache-from="$(docker images --quiet --all)"
+            -t "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1"
+            -f ./base/Dockerfile.$(echo $CIRCLE_JOB | cut -d'-' -f2)
       - run: *docker-dump-image
       - save_cache: *cache-save-docker
