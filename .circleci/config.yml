@@ -2,6 +2,9 @@
 version: 2
 
 x-defs:
+  - &defaults
+    docker:
+      - image: docker
   - &caches
     - &cache-load-docker
       keys:
