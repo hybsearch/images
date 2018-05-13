@@ -38,7 +38,7 @@ x-defs:
 
 workflows:
   version: 2
-  on_commit:
+  main:
     jobs: &jobs
       - base-stretch
       - base-alpine
@@ -64,15 +64,15 @@ workflows:
       - beast-stretch: { requires: [ java-stretch ] }
       - beast-alpine: { requires: [ java-alpine ] }
 
-  # cron_weekly:
-  #   jobs: *jobs
-  #   triggers:
-  #     - schedule:
-  #         # only run Monday morning at 12:00am
-  #         cron: 0 */6 * * *
-  #         filters:
-  #           branches:
-  #             only: [master]
+  cron:
+    jobs: *jobs
+    triggers:
+      - schedule:
+          # Run quadridiurnally (4x per day, every 6th hour UTC)
+          cron: "0 */6 * * *"
+          filters:
+            branches:
+              only: [master]
 
 jobs:
   base-stretch: &auto_build
