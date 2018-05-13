@@ -19,7 +19,7 @@ x-defs:
     name: 'Dump image'
     command: >-
       ls -lah /tmp; docker save "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1" >
-      /tmp/$(echo $CIRCLE_JOB | cut -d'-' -f1).tar
+      /tmp/$(echo $CIRCLE_JOB | cut -d'-' -f1).tar; ls -lah /tmp
 
 workflows:
   version: 2
