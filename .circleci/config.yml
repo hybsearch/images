@@ -52,6 +52,7 @@ workflows:
       - clustalo-stretch: { requires: [ libs-stretch ] }
       - clustalo-alpine: { requires: [ libs-alpine ] }
 
+      # External repository for these exists, but we build it here.
       - jml-stretch: { requires: [ libs-stretch ] }
       - jml-alpine: { requires: [ libs-alpine ] }
 
