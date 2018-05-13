@@ -42,20 +42,20 @@ workflows:
     jobs: &jobs
       - base-stretch
       - base-alpine
-      # - libs-stretch
-      # - libs
-      # - java-stretch
-      # - java
-      # - clustalo-stretch
-      # - clustalo
-      # - jml-stretch
-      # - jml
-      # - mr-bayes-stretch
-      # - mr-bayes
-      # - seqgen-stretch
-      # - seqgen-stretch
-      # - beast-stretch
-      # - beast-alpine
+      - libs-stretch
+      - libs-alpine
+      - java-stretch
+      - java-alpine
+      - clustalo-stretch
+      - clustalo-alpine
+      - jml-stretch
+      - jml-alpine
+      - mr-bayes-stretch
+      - mr-bayes-alpine
+      - seq-gen-stretch
+      - seq-gen-stretch
+      - beast-stretch
+      - beast-alpine
 
   # cron_weekly:
   #   jobs: *jobs
@@ -68,7 +68,7 @@ workflows:
   #             only: [master]
 
 jobs:
-  base-stretch:
+  base-stretch: &auto_build
     <<: *defaults
     steps: &standard_build_steps
       - run: *print-build-info
@@ -80,6 +80,25 @@ jobs:
       - run: *docker-dump-image
       - save_cache: *cache-save-docker
 
-  base-alpine:
-    <<: *defaults
-    steps: *standard_build_steps
+  base-alpine: *auto_build
+
+  libs-stretch: *auto_build
+  libs-alpine: *auto_build
+
+  java-stretch: *auto_build
+  java-alpine: *auto_build
+
+  clustalo-stretch: *auto_build
+  clustalo-alpine: *auto_build
+
+  jml-stretch: *auto_build
+  jml-alpine: *auto_build
+
+  mr-bayes-stretch: *auto_build
+  mr-bayes-alpine: *auto_build
+
+  seq-gen-stretch: *auto_build
+  seq-gen-alpine: *auto_build
+
+  beast-stretch: *auto_build
+  beast-alpine: *auto_build
