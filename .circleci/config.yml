@@ -5,21 +5,33 @@ x-defs:
   - &caches
     - &cache-load-docker
       keys:
-        - docker--{{ }}
+        - docker--{{ .Environment.CIRCLE_JOB }}--{{ arch }}-{{ .Branch }}-{{ .Revision }}
+        - docker--{{ .Environment.CIRCLE_JOB }}--{{ arch }}-{{ .Branch }}
+        - docker--{{ .Environment.CIRCLE_JOB }}--{{ arch }}
+    - &cache-save-docker
+      key: docker--{{ .Environment.CIRCLE_JOB }}--{{ arch }}-{{ .Branch }}-{{ .Revision }}
+      paths:
+        - /tmp/*.tar
+  - &docker-dump-image
+    name:
+      - name: 'Dump image'
+        command: |
+          ls -lah /tmp; docker save "$IMAGE_NAME:$CIRCLE_SHA1" > \
+            /tmp/$(echo $CIRCLE_JOB | cut -d'-' -f1).tar
 
 workflows:
   version: 2
   on_commit:
     jobs: &jobs
       - base-stretch
-      - base-alpine
-      - libs
-      - java
-      - clustalo
-      - jml
-      - mr-bayes
-      - seq-gen
-      - beast
+      # - base-alpine
+      # - libs
+      # - java
+      # - clustalo
+      # - jml
+      # - mr-bayes
+      # - seq-gen
+      # - beast
 
   cron_weekly:
     jobs: *jobs
@@ -32,10 +44,14 @@ workflows:
               only: [master]
 
 jobs:
-  base:
+  base-stretch:
     steps:
       - setup_remote_docker
       - checkout
-      - docker build --cache-from="$(docker images --quiet --all)" -t "hybsearch/base:$CIRCLE_SHA1" -f ./base/Dockerfile.stretch
-      - run: *cmd-docker-save
+      - name: "Build the Docker Image"
+        command: |
+          docker build --cache-from="$(docker images --quiet --all)" \
+                       -t "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1" \
+                       -f ./base/Dockerfile.$(echo $CIRCLE_JOB | cut -d'-' -f2)
+      - run: *docker-dump-image
       - save_cache: *cache-save-docker
