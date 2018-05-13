@@ -109,8 +109,8 @@ jobs:
     <<: *defaults
     steps: &standard_build_steps
       - setup_remote_docker
-      - print_build_info
       - checkout
+      - run: *print-build-info
       - restore_cache: *cache-load-docker
       - run: *docker-load-image
       - run: *docker-build
