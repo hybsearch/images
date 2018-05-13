@@ -14,12 +14,11 @@ x-defs:
     - &cache-save-docker
       key: docker--{{ .Environment.CIRCLE_JOB }}--{{ arch }}-{{ .Branch }}-{{ .Revision }}
       paths:
-        - /tmp/*.tar
+        - /tmp/image.tar
   - &docker-dump-image
     name: 'Dump image'
     command: >-
-      ls -lah /tmp; docker save "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1" >
-      /tmp/$(echo $CIRCLE_JOB | cut -d'-' -f1).tar; ls -lah /tmp
+      docker save "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1" > /tmp/image.tar
 
 workflows:
   version: 2
