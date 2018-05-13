@@ -22,10 +22,16 @@ fi
 docker tag "$image_id" "hybsearch/$inferred_image:$inferred_variant"
 images_to_push="hybsearch/$inferred_image:$inferred_variant"
 
+echo "Tagged hybsearch/$inferred_image:$inferred_variant"
+
 if [[ "$inferred_variant" = "stretch" ]];
 then
 	docker tag "$image_id" "hybsearch/$inferred_image:latest"
 	images_to_push="$images_to_push hybsearch/$inferred_image:latest"
+
+	echo "Tagged hybsearch/$inferred_image:latest"
 fi
 
 docker push "$images_to_push"
+
+echo "Pushed."
