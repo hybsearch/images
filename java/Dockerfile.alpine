@@ -1,4 +1,4 @@
 FROM hybsearch/libs:alpine
 
-RUN apk add -U \
+RUN apk add --no-cache -U \
     openjdk8
