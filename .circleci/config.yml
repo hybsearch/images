@@ -26,6 +26,10 @@ x-defs:
   - &docker-build
     name: "Build the Docker Image"
     command: script/ci_build_image
+  - &docker-login
+    name: "Log in to Docker Hub"
+    command: >-
+      docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - &docker-deploy
     name: "Deploy to Docker Hub"
     command: script/ci_deploy_image
@@ -114,6 +118,7 @@ jobs:
       - restore_cache: *cache-load-docker
       - run: *docker-load-image
       - run: *docker-build
+      - run: *docker-login
       - run: *docker-deploy
       - run: *docker-dump-image
       - save_cache: *cache-save-docker
