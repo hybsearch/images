@@ -1,4 +1,4 @@
-FROM hybsearch/java:stretch
+FROM hybsearch/java:stretch AS beast-install
 
 RUN apt-get update \
     && apt-get install -qy --no-install-recommends \
