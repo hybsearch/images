@@ -1,6 +1,6 @@
 FROM docker.io/alpine:latest
 
-RUN apk add -U \
+RUN apk add --no-cache -U \
     autoconf \
     automake \
     gcc g++ \
