@@ -36,7 +36,7 @@ workflows:
   on_commit:
     jobs: &jobs
       - base-stretch
-      # - base-alpine
+      - base-alpine
       # - libs
       # - java
       # - clustalo
@@ -58,7 +58,7 @@ workflows:
 jobs:
   base-stretch:
     <<: *defaults
-    steps:
+    steps: &standard_build_steps
       - setup_remote_docker
       - checkout
       - restore_cache: *cache-load-docker
@@ -66,3 +66,7 @@ jobs:
       - run: *docker-build-circle-job-image
       - run: *docker-dump-image
       - save_cache: *cache-save-docker
+
+  base-alpine:
+    <<: *defaults
+    steps: *standard_build_steps
