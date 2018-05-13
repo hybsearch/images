@@ -1,16 +1,10 @@
-FROM docker.io/debian:stretch-slim
+FROM docker.io/alpine:latest
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-       autoconf \
-       automake \
-       build-essential \
-       ca-certificates \
-       git \
-       libtool \
-       pkg-config \
-    && apt-get clean autoclean \
-    && rm -rfv /var/lib/apt/ \
-               /var/lib/dpkg/ \
-               /var/lib/cache/ \
-               /var/lib/log/
+RUN apk add -U \
+    autoconf \
+    automake \
+    gcc g++ \
+    ca-certificates \
+    git \
+    libtool \
+    pkg-config
