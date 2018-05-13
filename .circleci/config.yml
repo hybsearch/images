@@ -19,6 +19,10 @@ x-defs:
     name: 'Dump image'
     command: >-
       docker save "hybsearch/$(echo $CIRCLE_JOB | cut -d'-' -f1):$CIRCLE_SHA1" > /tmp/image.tar
+  - &docker-load-image
+    name: 'Load cached image'
+    command: >-
+      docker load -qi /tmp/image.tar
   - &docker-build-circle-job-image
     name: "Build the Docker Image"
     command: >-
@@ -58,6 +62,7 @@ jobs:
       - setup_remote_docker
       - checkout
       - restore_cache: *cache-load-docker
+      - run: *docker-load-image
       - run: *docker-build-circle-job-image
       - run: *docker-dump-image
       - save_cache: *cache-save-docker
