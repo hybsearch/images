@@ -25,10 +25,7 @@ x-defs:
       test -r /tmp/image.tar && docker load -qi /tmp/image.tar || echo "No cache found."
   - &docker-build-circle-job-image
     name: "Build the Docker Image"
-    command: >-
-      pwd;
-      ls -lah;
-      ./script/ci_build_image
+    command: script/ci_build_image
 
   - &print-build-info
     name: "Print build information"
