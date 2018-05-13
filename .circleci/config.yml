@@ -33,15 +33,15 @@ workflows:
       # - seq-gen
       # - beast
 
-  cron_weekly:
-    jobs: *jobs
-    triggers:
-      - schedule:
-          # only run Monday morning at 12:00am
-          cron: 0 */6 * * *
-          filters:
-            branches:
-              only: [master]
+  # cron_weekly:
+  #   jobs: *jobs
+  #   triggers:
+  #     - schedule:
+  #         # only run Monday morning at 12:00am
+  #         cron: 0 */6 * * *
+  #         filters:
+  #           branches:
+  #             only: [master]
 
 jobs:
   base-stretch:
