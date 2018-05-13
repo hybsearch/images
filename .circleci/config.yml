@@ -43,54 +43,26 @@ workflows:
       - base-stretch
       - base-alpine
 
-      - libs-stretch:
-        requires:
-          - base-stretch
-      - libs-alpine:
-        requires:
-          - base-alpine
+      - libs-stretch: { requires: [ base-stretch ] }
+      - libs-alpine: { requires: [ base-alpine ] }
 
-      - java-stretch:
-        requires:
-          - libs-stretch
-      - java-alpine:
-        requires:
-          - libs-alpine
+      - java-stretch: { requires: [ libs-stretch ] }
+      - java-alpine: { requires: [ libs-alpine ] }
 
-      - clustalo-stretch:
-        requires:
-          - libs-stretch
-      - clustalo-alpine:
-        requires:
-          - libs-alpine
+      - clustalo-stretch: { requires: [ libs-stretch ] }
+      - clustalo-alpine: { requires: [ libs-alpine ] }
 
-      - jml-stretch:
-        requires:
-          - libs-stretch
-      - jml-alpine:
-        requires:
-          - libs-alpine
+      - jml-stretch: { requires: [ libs-stretch ] }
+      - jml-alpine: { requires: [ libs-alpine ] }
 
-      - mr-bayes-stretch:
-        requires:
-          - libs-stretch
-      - mr-bayes-alpine:
-        requires:
-          - libs-alpine
+      - mr-bayes-stretch: { requires: [ libs-stretch ] }
+      - mr-bayes-alpine: { requires: [ libs-alpine ] }
 
-      - seq-gen-stretch:
-        requires:
-          - libs-stretch
-      - seq-gen-stretch:
-        requires:
-          - libs-alpine
+      - seq-gen-stretch: { requires: [ libs-stretch ] }
+      - seq-gen-stretch: { requires: [ libs-alpine ] }
 
-      - beast-stretch:
-        requires:
-          - java-stretch
-      - beast-alpine:
-        requires:
-          - java-alpine
+      - beast-stretch: { requires: [ java-stretch ] }
+      - beast-alpine: { requires: [ java-alpine ] }
 
   # cron_weekly:
   #   jobs: *jobs
