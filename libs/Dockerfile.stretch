@@ -1,3 +1,5 @@
 FROM docker.io/amd64/node:8-stretch AS hyb-node
 
 FROM hybsearch/base:stretch
+
+COPY --from=hyb-node ["/usr/local/", "/usr/local/"]

@@ -1,1 +1,5 @@
+FROM docker.io/amd64/node:8-alpine AS hyb-node
+
 FROM hybsearch/base:alpine
+
+COPY --from=hyb-node ["/usr/local/", "/usr/local/"]
