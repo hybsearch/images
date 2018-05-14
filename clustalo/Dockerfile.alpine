@@ -1,8 +1,8 @@
-FROM hybsearch/libs:alpine AS build
+FROM hybsearch/libs:alpine AS build-deps
 
-RUN apk add --no-cache -U \
-    automake autoconf gcc g++ make \
-    curl
+RUN apk add --no-cache -U autoconf automake curl g++ gcc make
+
+FROM build-deps AS build
 
 RUN curl -fsSL "https://github.com/hybsearch/clustalo/archive/v1.2.4.tar.gz" | gunzip - | tar -xv
 
