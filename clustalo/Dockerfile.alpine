@@ -19,4 +19,5 @@ RUN make -j$cores clean
 
 FROM hybsearch/libs:alpine
 
+# TODO refine this down to just what we need
 COPY --from=build ["/usr/local/", "/usr/local/"]
