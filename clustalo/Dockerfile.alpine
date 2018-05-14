@@ -1,1 +1,3 @@
+FROM hybsearch/libs:alpine AS build
+
 FROM hybsearch/libs:alpine
