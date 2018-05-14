@@ -6,4 +6,17 @@ RUN apk add --no-cache -U \
 
 RUN curl -fsSL "https://github.com/hybsearch/clustalo/archive/v1.2.4.tar.gz" | gunzip - | tar -xv
 
+WORKDIR /clustalo-1.2.4
+
+ARG cores=4
+
+RUN ./configure --prefix=/usr/local --disable-dependency-tracking
+RUN make -j$cores
+RUN make -j$cores check
+RUN make -j$cores install
+RUN make -j$cores installcheck
+RUN make -j$cores clean
+
 FROM hybsearch/libs:alpine
+
+COPY --from=build ["/usr/local/", "/usr/local/"]
