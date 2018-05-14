@@ -1,4 +1,4 @@
-FROM hybsearch/libs:stretch AS build
+FROM hybsearch/libs:stretch AS build-deps
 
 RUN apt-get update \
     && apt-get install -qy --no-install-recommends \
@@ -9,6 +9,8 @@ RUN apt-get update \
                /var/lib/dpkg/ \
                /var/lib/cache/ \
                /var/lib/log/
+
+FROM build-deps AS build
 
 RUN curl -fsSL "https://github.com/hybsearch/clustalo/archive/v1.2.4.tar.gz" | gunzip - | tar -xv
 
