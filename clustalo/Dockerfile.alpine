@@ -1,3 +1,7 @@
 FROM hybsearch/libs:alpine AS build
 
+RUN apk add --no-cache -U \
+    automake autoconf gcc g++ make \
+    curl
+
 FROM hybsearch/libs:alpine
