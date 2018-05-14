@@ -2,7 +2,7 @@ FROM hybsearch/java:stretch AS beast-install
 
 RUN curl -fsSL "https://github.com/CompEvol/beast2/releases/download/v2.4.8/BEAST.v2.4.8.Linux.tgz" | gunzip - | tar -xv
 
-FROM hybsearch/java:alpine
+FROM hybsearch/java:stretch
 
 COPY --from=beast-install ["/beast/bin/beast", "/usr/local/bin/"]
 COPY --from=beast-install ["/beast/lib/beast.jar", "/usr/local/lib/"]
