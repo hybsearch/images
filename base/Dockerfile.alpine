@@ -1,4 +1,4 @@
 FROM docker.io/alpine:latest
 
 RUN apk add --no-cache -U \
-    ca-certificates
+    ca-certificates curl
