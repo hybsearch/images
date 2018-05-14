@@ -1,1 +1,25 @@
+FROM hybsearch/libs:stretch AS build-deps
+
+RUN apt-get update \
+    && apt-get install -qy --no-install-recommends \
+       automake autoconf gcc g++ make \
+    && apt-get clean autoclean \
+    && rm -rfv /var/lib/apt/ \
+               /var/lib/dpkg/ \
+               /var/lib/cache/ \
+               /var/lib/log/
+
+FROM build-deps AS build
+
+RUN curl -fsSL "https://github.com/hybsearch/jml/archive/v1.3.1.tar.gz" | gunzip - | tar -xv
+
+WORKDIR /jml-1.3.1/src
+
+ARG cores=4
+
+RUN make -j$cores
+RUN mv ./jml /usr/local/bin/jml
+
 FROM hybsearch/libs:stretch
+
+COPY --from=build ["/usr/local/bin/jml", "/usr/local/bin/jml"]
