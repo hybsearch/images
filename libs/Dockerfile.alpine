@@ -25,4 +25,4 @@ RUN apk add --no-cache -U libgomp
 
 COPY --from=hyb-node ["/usr/local/", "/usr/local/"]
 COPY --from=argtable ["/usr/local/include/argtable2.h", "/usr/local/include/"]
-COPY --from=argtable ["/usr/local/lib/*argtable2", "/usr/local/lib/"]
+COPY --from=argtable ["/usr/local/lib/*argtable*", "/usr/local/lib/"]
