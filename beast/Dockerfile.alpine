@@ -1,7 +1,5 @@
 FROM hybsearch/base:alpine AS beast-install
 
-RUN apk add --no-cache -U curl
-
 RUN curl -fsSL "https://github.com/CompEvol/beast2/releases/download/v2.4.8/BEAST.v2.4.8.Linux.tgz" | gunzip - | tar -xv
 
 FROM hybsearch/java:alpine

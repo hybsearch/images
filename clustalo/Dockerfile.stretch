@@ -3,7 +3,6 @@ FROM hybsearch/libs:stretch AS build-deps
 RUN apt-get update \
     && apt-get install -qy --no-install-recommends \
        automake autoconf gcc g++ make \
-       curl \
     && apt-get clean autoclean \
     && rm -rfv /var/lib/apt/ \
                /var/lib/dpkg/ \

@@ -1,14 +1,5 @@
 FROM hybsearch/java:stretch AS beast-install
 
-RUN apt-get update \
-    && apt-get install -qy --no-install-recommends \
-       curl \
-    && apt-get clean autoclean \
-    && rm -rfv /var/lib/apt/ \
-               /var/lib/dpkg/ \
-               /var/lib/cache/ \
-               /var/lib/log/
-
 RUN curl -fsSL "https://github.com/CompEvol/beast2/releases/download/v2.4.8/BEAST.v2.4.8.Linux.tgz" | gunzip - | tar -xv
 
 FROM hybsearch/java:alpine

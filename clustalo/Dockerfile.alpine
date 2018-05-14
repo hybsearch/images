@@ -1,6 +1,6 @@
 FROM hybsearch/libs:alpine AS build-deps
 
-RUN apk add --no-cache -U autoconf automake curl g++ gcc make
+RUN apk add --no-cache -U autoconf automake g++ gcc make
 
 FROM build-deps AS build
 
