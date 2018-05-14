@@ -1,4 +1,4 @@
-FROM hybsearch/java:stretch AS beast-install
+FROM hybsearch/base:stretch AS beast-install
 
 RUN curl -fsSL "https://github.com/CompEvol/beast2/releases/download/v2.4.8/BEAST.v2.4.8.Linux.tgz" | gunzip - | tar -xv
 
