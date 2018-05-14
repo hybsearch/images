@@ -1,5 +1,28 @@
 FROM docker.io/amd64/node:8-alpine AS hyb-node
 
+FROM hybsearch/libs:alpine AS build-deps
+
+RUN apk add --no-cache -U autoconf automake curl g++ gcc make
+
+FROM build-deps AS argtable
+
+RUN curl -fsSL "https://sourceforge.net/projects/argtable/files/argtable/argtable-2.13/argtable2-13.tar.gz" | gunzip - | tar -xv
+
+WORKDIR /argtable2-13
+
+ARG cores=4
+
+RUN ./configure --prefix=/usr/local --disable-dependency-tracking
+RUN make -j$cores
+RUN make -j$cores check
+RUN make -j$cores install
+RUN make -j$cores installcheck
+RUN make -j$cores clean
+
 FROM hybsearch/base:alpine
 
+RUN apk add --no-cache -U libgomp
+
 COPY --from=hyb-node ["/usr/local/", "/usr/local/"]
+COPY --from=argtable ["/usr/local/include/argtable2.h", "/usr/local/include/"]
+COPY --from=argtable ["/usr/local/lib/*argtable2", "/usr/local/lib/"]
