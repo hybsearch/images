@@ -101,8 +101,8 @@ workflows:
     jobs: *jobs
     triggers:
       - schedule:
-          # Run quadridiurnally (4x per day, every 6th hour UTC)
-          cron: "0 0,6,12,18 * * *"
+          # Run daily at 6 PM UTC
+          cron: "0 18 * * *"
           filters:
             branches:
               only: [master]
